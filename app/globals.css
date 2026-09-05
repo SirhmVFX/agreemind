@@ -1,0 +1,322 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0c0b09;
+  --bg-2: #141210;
+  --fg: #f3eee4;
+  --muted: #9a9386;
+  --line: #2a261f;
+  --gold: #c4a06a;
+  --gold-2: #e2c48a;
+  --sage: #7ea48a;
+  --paper: #f4efe6;
+  --ink: #161411;
+  --danger: #c45c4a;
+  --ok: #6ea882;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg2: var(--bg-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-gold: var(--gold);
+  --color-gold2: var(--gold-2);
+  --color-sage: var(--sage);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-danger: var(--danger);
+  --color-ok: var(--ok);
+  --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-instrument);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+.font-serif {
+  font-family: var(--font-instrument), "Times New Roman", serif;
+}
+
+.grain {
+  position: relative;
+}
+
+.grain::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hairline {
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+  height: 1px;
+  border: 0;
+}
+
+.paper-shadow {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 24px 60px rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.field {
+  width: 100%;
+  background: #1a1814;
+  border: 1px solid var(--line);
+  color: var(--fg);
+  border-radius: 10px;
+  padding: 0.7rem 0.85rem;
+  outline: none;
+}
+
+.field:focus {
+  border-color: color-mix(in srgb, var(--gold) 55%, var(--line));
+}
+
+.field-light {
+  width: 100%;
+  background: #fffdf8;
+  border: 1px solid #ddd4c4;
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+  outline: none;
+}
+
+.label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  padding: 0.7rem 1.15rem;
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: #16120b;
+  box-shadow: 0 0 0 0 rgba(196, 160, 106, 0);
+}
+
+.btn-gold:hover {
+  background: var(--gold-2);
+  box-shadow: 0 10px 28px rgba(196, 160, 106, 0.22);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--fg);
+}
+
+.btn-ghost:hover {
+  border-color: color-mix(in srgb, var(--fg) 30%, var(--line));
+  background: color-mix(in srgb, var(--fg) 4%, transparent);
+}
+
+.btn-ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn-danger {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--danger) 50%, var(--line));
+  color: #e8b4ab;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+
+.status-draft {
+  color: var(--muted);
+}
+.status-sent,
+.status-viewed {
+  color: var(--gold-2);
+  border-color: color-mix(in srgb, var(--gold) 40%, var(--line));
+}
+.status-paid,
+.status-signed {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 40%, var(--line));
+}
+.status-overdue,
+.status-declined,
+.status-void {
+  color: #e8b4ab;
+  border-color: color-mix(in srgb, var(--danger) 45%, var(--line));
+}
+.status-partial {
+  color: #d7c08a;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .print-sheet {
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.marquee-wrap:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.lift-card {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease,
+    box-shadow 0.35s ease;
+}
+
+.lift-card:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--line));
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.28);
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.25s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.site-header {
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.site-header.is-scrolled {
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .glow-orb {
+    animation: none !important;
+  }
+
+  .lift-card,
+  .btn {
+    transition: none;
+  }
+
+  .lift-card:hover {
+    transform: none;
+  }
+}

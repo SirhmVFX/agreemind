@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    match /studios/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+
+    match /clients/{id} {
+      allow read, write: if signedIn() && request.auth.uid == resource.data.ownerId;
+      allow create: if signedIn() && request.auth.uid == request.resource.data.ownerId;
+    }
+
+    match /invoices/{id} {
+      allow read: if true;
+      allow create: if signedIn() && request.auth.uid == request.resource.data.ownerId;
+      allow update: if (signedIn() && request.auth.uid == resource.data.ownerId)
+        || request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['status', 'updatedAt', 'pdfUrl']);
+      allow delete: if signedIn() && request.auth.uid == resource.data.ownerId;
+    }
+
+    match /agreements/{id} {
+      allow read: if true;
+      allow create: if signedIn() && request.auth.uid == request.resource.data.ownerId;
+      allow update: if (signedIn() && request.auth.uid == resource.data.ownerId)
+        || request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['status', 'signerName', 'signedAt']);
+      allow delete: if signedIn() && request.auth.uid == resource.data.ownerId;
+    }
+  }
+}
